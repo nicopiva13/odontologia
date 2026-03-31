@@ -1,0 +1,74 @@
+{
+  "name": "Docta Innova",
+  "tagline": "Tecnología de Vanguardia y Cuidado Profesional",
+  "logo": "Docta Innova",
+  "phone": "0353 562-1468",
+  "whatsapp": "543535621468",
+  "whatsappLink": "https://wa.me/543535621468",
+  "address": "Calle Ficticia 123, Villa María, Córdoba",
+  "instagram": "nicoopiva",
+  "youtube": "@doctainnova",
+  "email": "contacto@doctainnova.com",
+  "colors": {
+    "primary": "#1a6b5e",
+    "accent": "#f0c040",
+    "bg": "#f9f8f5",
+    "dark": "#111111",
+    "text": "#2a2a2a"
+  },
+  "hero": {
+    "headline": "La sonrisa que siempre quisiste",
+    "subheadline": "Odontología de excelencia y tecnología moderna. Contamos con laboratorio digital avanzado.",
+    "ctaText": "Agendar mi Evaluación Personalizada",
+    "ctaSubtext": "Consultas rápidas por WhatsApp",
+    "image": "/images/hero.png"
+  },
+  "services": [
+    {
+      "icon": "🖥️",
+      "title": "Laboratorio Digital",
+      "desc": "Resultados precisos: prótesis y coronas en tiempo récord.",
+      "image": "/images/service-lab.png"
+    },
+    {
+      "icon": "🦷",
+      "title": "Ortodoncia",
+      "desc": "Brackets y alineadores invisibles de alta tecnología.",
+      "image": "/images/service-ortho.png"
+    },
+    {
+      "icon": "✨",
+      "title": "Blanqueamiento",
+      "desc": "Resultados profesionales desde la primera sesión.",
+      "image": "/images/service-whitening.png"
+    },
+    {
+      "icon": "🔬",
+      "title": "Implantes",
+      "desc": "Soluciones permanentes, estéticas y digitales.",
+      "image": "/images/service-implants.png"
+    },
+    {
+      "icon": "👶",
+      "title": "Odontopediatría",
+      "desc": "Cuidado especial y calidez para los más chicos.",
+      "image": "/images/service-kids.png"
+    },
+    {
+      "icon": "🩺",
+      "title": "Urgencias",
+      "desc": "Atención rápida cuando más lo necesitás.",
+      "image": "/images/service-emergency.png"
+    }
+  ],
+  "schedule": [
+    {
+      "day": "Lunes a Viernes",
+      "hours": "9:00 – 18:00"
+    },
+    {
+      "day": "Sábados",
+      "hours": "9:00 – 13:00"
+    }
+  ]
+}

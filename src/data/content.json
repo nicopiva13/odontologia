@@ -1,0 +1,62 @@
+{
+  "benefits": [
+    { "icon": "/images/exp-lab.png", "title": "Laboratorio Digital", "desc": "Contamos con laboratorio propio para resultados precisos y rápidos." },
+    { "icon": "/images/exp-card.png", "title": "Obras Sociales", "desc": "Trabajamos con los principales planes de salud y coberturas." },
+    { "icon": "/images/exp-degree.png", "title": "Excelencia Médica", "desc": "Odontólogos especialistas altamente capacitados en todas las áreas." },
+    { "icon": "/images/exp-location.png", "title": "Ubicación Premium", "desc": "Instalaciones modernas en el corazón de Villa María." }
+  ],
+  "testimonials": [
+    {
+      "name": "María G.",
+      "text": "Excelente atención y tecnología. Estaba buscando un lugar con laboratorio propio y quedé encantada con los resultados.",
+      "rating": 5
+    },
+    {
+      "name": "Carlos P.",
+      "text": "Fui por una urgencia y me atendieron al instante. Muy profesionales y el equipamiento es de otro nivel.",
+      "rating": 5
+    },
+    {
+      "name": "Laura M.",
+      "text": "El trato con los niños es impecable, mi hija ya no tiene miedo de ir al dentista. ¡Totalmente recomendados!",
+      "rating": 5
+    }
+  ],
+  "faq": [
+    { "q": "¿Trabajan con mi obra social o prepaga?", "a": "Sí, recibimos la mayoría de los planes de salud y prepagas del mercado. Consultanos por WhatsApp para confirmar tu cobertura específica." },
+    { "q": "¿Cómo pido un turno?", "a": "Podés hacerlo directamente por el botón de WhatsApp, llamándonos o completando el formulario de contacto para una atención prioritaria." },
+    { "q": "¿Ofrecen planes de pago o cuotas?", "a": "Sí, contamos con diferentes opciones de financiación y aceptamos todas las tarjetas para que puedas realizar tu tratamiento sin preocupaciones." },
+    { "q": "¿Tienen laboratorio?", "a": "Sí, contamos con laboratorio de odontología digital integrado, lo que nos permite entregar prótesis y coronas en tiempo récord con precisión micrónica." }
+  ],
+  "beforeAfter": [
+    {
+      "title": "Restauración Estética",
+      "desc": "Carillas de porcelana y diseño de sonrisa digital de alta precisión.",
+      "imageBefore": "/images/veneers-before.png",
+      "imageAfter": "/images/veneers.png"
+    },
+    {
+      "title": "Implantes Dentales",
+      "desc": "Recuperación total de la funcionalidad con tecnología de carga inmediata.",
+      "imageBefore": "/images/implants-before.png",
+      "imageAfter": "/images/implants.png"
+    }
+  ],
+  "process": [
+    {
+      "step": "01",
+      "title": "Diagnóstico",
+      "desc": "Evaluación con escaneo 3D intraoral sin moldes molestos."
+    },
+    {
+      "step": "02",
+      "title": "Diseño",
+      "desc": "Proyectamos tu nueva sonrisa en pantalla antes de iniciar."
+    },
+    {
+      "step": "03",
+      "title": "Tratamiento",
+      "desc": "Procedimientos indoloros con tecnología de vanguardia."
+    }
+  ]
+}
