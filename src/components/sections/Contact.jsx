@@ -101,6 +101,47 @@ const Contact = ({ config }) => {
                   </div>
                 </div>
 
+                {/* Mapa placeholder */}
+                {config.googleMapsEmbed ? (
+                  <div style={{ borderRadius: '12px', overflow: 'hidden', marginTop: '8px' }}>
+                    <iframe
+                      src={config.googleMapsEmbed}
+                      width="100%"
+                      height="160"
+                      style={{ border: 'none', display: 'block' }}
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Ubicación en Google Maps"
+                    />
+                  </div>
+                ) : (
+                  <a
+                    href={config.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(config.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      marginTop: '8px',
+                      padding: '12px 16px',
+                      backgroundColor: 'rgba(255,255,255,0.1)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '10px',
+                      color: 'white',
+                      textDecoration: 'none',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      transition: 'background 0.2s ease',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.18)'}
+                    onMouseLeave={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
+                  >
+                    📍 Ver en Google Maps →
+                  </a>
+                )}
+
                 <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                   <div style={{ fontSize: '1.4rem' }}>📞</div>
                   <div>

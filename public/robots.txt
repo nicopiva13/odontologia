@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Bloquear rutas de desarrollo o admin si existieran
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://tuodontologia.com/sitemap.xml

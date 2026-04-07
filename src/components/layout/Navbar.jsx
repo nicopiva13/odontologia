@@ -1,21 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../ui/Button';
+import clinic from '../../data/clinic.json';
 
 const Navbar = ({ config }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [topBarVisible, setTopBarVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 50);
+      setTopBarVisible(scrollY <= 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navStyle = {
+  const topBarHeight = 36;
+
+  const topBarStyle = {
     position: 'fixed',
     top: 0,
+    left: 0,
+    width: '100%',
+    height: `${topBarHeight}px`,
+    backgroundColor: 'var(--primary)',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '0 5%',
+    fontSize: '0.8rem',
+    fontWeight: '500',
+    zIndex: 1001,
+    transform: topBarVisible ? 'translateY(0)' : `translateY(-${topBarHeight}px)`,
+    transition: 'transform 0.3s ease',
+    letterSpacing: '0.3px',
+  };
+
+  const navStyle = {
+    position: 'fixed',
+    top: topBarVisible ? `${topBarHeight}px` : 0,
     left: 0,
     width: '100%',
     padding: isScrolled ? '15px 5%' : '25px 5%',
@@ -38,7 +64,27 @@ const Navbar = ({ config }) => {
     transition: 'var(--transition)',
   };
 
+  // Extraer ciudad y provincia de la dirección
+  const addressParts = clinic.address.split(',');
+  const cityProvince = addressParts.length >= 3
+    ? `${addressParts[1].trim()}, ${addressParts[2].trim()}`
+    : clinic.address;
+
   return (
+    <>
+      {/* Top Bar */}
+      <div style={topBarStyle}>
+        <span>📍 {cityProvince}</span>
+        {clinic.emergency && (
+          <span style={{ fontWeight: '700', letterSpacing: '0.5px' }}>
+            ⚡ {clinic.emergencyText || 'Atendemos Urgencias Dentales'}
+          </span>
+        )}
+        <span>
+          📞 <a href={`tel:${clinic.phone}`} style={{ color: 'white', textDecoration: 'none' }}>{clinic.phone}</a>
+        </span>
+      </div>
+
     <nav style={navStyle}>
       <a href="#" style={{ 
         fontSize: '1.5rem', 
@@ -135,6 +181,7 @@ const Navbar = ({ config }) => {
         </Button>
       </div>
     </nav>
+    </>
   );
 };
 

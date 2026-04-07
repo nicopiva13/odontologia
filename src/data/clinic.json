@@ -1,14 +1,14 @@
 {
-  "name": "Docta Innova",
-  "tagline": "Tecnología de Vanguardia y Cuidado Profesional",
-  "logo": "Docta Innova",
-  "phone": "0353 562-1468",
-  "whatsapp": "543535621468",
-  "whatsappLink": "https://wa.me/543535621468",
-  "address": "Calle Ficticia 123, Villa María, Córdoba",
-  "instagram": "nicoopiva",
-  "youtube": "@doctainnova",
-  "email": "contacto@doctainnova.com",
+  "name": "Centro Odontológico [NOMBRE]",
+  "tagline": "Tu sonrisa, nuestra prioridad",
+  "logo": "Centro Odontológico [NOMBRE]",
+  "phone": "+54 XXX XXX-XXXX",
+  "whatsapp": "54XXXXXXXXXX",
+  "whatsappLink": "https://wa.me/54XXXXXXXXXX",
+  "address": "Av. Principal 1234, [Ciudad], [Provincia]",
+  "instagram": "@tuodontologia",
+  "youtube": "@tuodontologia",
+  "email": "contacto@tuodontologia.com",
   "colors": {
     "primary": "#1a6b5e",
     "accent": "#f0c040",
@@ -70,5 +70,31 @@
       "day": "Sábados",
       "hours": "9:00 – 13:00"
     }
-  ]
+  ],
+  "team": [
+    {
+      "name": "Dr. [Nombre Apellido]",
+      "specialty": "Director Médico - Implantología",
+      "years": "X",
+      "image": "images/doctor-1.jpg"
+    },
+    {
+      "name": "Dra. [Nombre Apellido]",
+      "specialty": "Especialista en Ortodoncia",
+      "years": "X",
+      "image": "images/doctor-2.jpg"
+    },
+    {
+      "name": "Dr. [Nombre Apellido]",
+      "specialty": "Odontología General y Estética",
+      "years": "X",
+      "image": "images/doctor-3.jpg"
+    }
+  ],
+  "insurance": ["OSDE", "Swiss Medical", "Medifé", "PAMI", "Particular y más"],
+  "financing": "Hasta 12 cuotas sin interés con tarjeta de crédito",
+  "emergency": true,
+  "emergencyText": "Atendemos urgencias dentales",
+  "googleMapsUrl": "https://maps.google.com/?q=Av.+Principal+1234,+[Ciudad],+[Provincia]",
+  "googleMapsEmbed": ""
 }

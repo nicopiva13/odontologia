@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ServiceCard = ({ icon, title, desc, image, className = "" }) => {
+const ServiceCard = ({ icon, title, desc, image, className = "", whatsappNumber }) => {
   return (
     <div
       className={`service-card reveal ${className}`}
@@ -52,9 +52,29 @@ const ServiceCard = ({ icon, title, desc, image, className = "" }) => {
         </div>
       </div>
 
-      <div style={{ padding: '30px' }}>
+      <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <h3 style={{ marginBottom: "15px", fontSize: "1.4rem", fontWeight: '700' }}>{title}</h3>
-        <p style={{ color: "rgba(0,0,0,0.6)", fontSize: "0.95rem", lineHeight: '1.6' }}>{desc}</p>
+        <p style={{ color: "rgba(0,0,0,0.6)", fontSize: "0.95rem", lineHeight: '1.6', flexGrow: 1 }}>{desc}</p>
+        {whatsappNumber && (
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=Hola, me interesa el servicio de ${encodeURIComponent(title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              marginTop: '20px',
+              color: 'var(--primary)',
+              fontWeight: '700',
+              fontSize: '0.95rem',
+              textDecoration: 'none',
+              transition: 'opacity 0.2s ease',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+          >
+            Consultar →
+          </a>
+        )}
       </div>
     </div>
   );

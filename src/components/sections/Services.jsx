@@ -1,7 +1,7 @@
 import React from 'react';
 import ServiceCard from '../ui/ServiceCard';
 
-const Services = ({ services }) => {
+const Services = ({ services, whatsapp }) => {
   return (
     <section id="servicios">
       <div className="container">
@@ -27,6 +27,7 @@ const Services = ({ services }) => {
               title={service.title}
               desc={service.desc}
               className={`delay-${(index % 3) + 1}`}
+              whatsappNumber={whatsapp}
             />
           ))}
         </div>

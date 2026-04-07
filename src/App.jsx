@@ -19,8 +19,10 @@ import Testimonials from './components/sections/Testimonials';
 import Contact from './components/sections/Contact';
 import Process from './components/sections/Process';
 import Comparison from './components/sections/Comparison';
+import Insurance from './components/sections/Insurance';
 import FAQ from './components/sections/FAQ';
 import Technology from './components/sections/Technology';
+import Team from './components/sections/Team';
 import AppointmentBanner from './components/sections/AppointmentBanner';
 import WhatsAppFloat from './components/ui/WhatsAppFloat';
 import GoogleBadge from './components/ui/GoogleBadge';
@@ -87,9 +89,13 @@ function App() {
         <Process steps={contentConfig.process} colors={clinicConfig.colors} />
         
         <Technology colors={clinicConfig.colors} />
-        
-        <Services services={clinicConfig.services} />
-        
+
+        <Team colors={clinicConfig.colors} />
+
+        <Services services={clinicConfig.services} whatsapp={clinicConfig.whatsapp} />
+
+        <Insurance />
+
         <Comparison items={contentConfig.beforeAfter} colors={clinicConfig.colors} />
         
         <WhyUs 
