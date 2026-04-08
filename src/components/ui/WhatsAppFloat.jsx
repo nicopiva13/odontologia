@@ -1,49 +1,111 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const WhatsAppFloat = ({ whatsapp }) => {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <>
-      <style>
-        {`
-          @keyframes pulse-wa {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-          }
-          .wa-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25d366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 999;
-            transition: var(--transition);
-            animation: pulse-wa 2s infinite;
-            text-decoration: none;
-          }
-          .wa-float:hover {
-            transform: scale(1.05);
-            background-color: #20b355;
-          }
-        `}
-      </style>
-      <a 
-        href={whatsapp} 
-        className="wa-float" 
-        target="_blank" 
+      <style>{`
+        @keyframes wa-pulse-ring {
+          0%   { transform: scale(1);   opacity: 0.6; }
+          70%  { transform: scale(1.7); opacity: 0; }
+          100% { transform: scale(1.7); opacity: 0; }
+        }
+
+        .wa-float-btn {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background-color: #25D366;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+          z-index: 999;
+          text-decoration: none;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          cursor: pointer;
+        }
+
+        .wa-float-btn:hover {
+          transform: scale(1.08);
+          box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+        }
+
+        .wa-pulse-ring {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background-color: #25D366;
+          z-index: 998;
+          pointer-events: none;
+          animation: wa-pulse-ring 3s ease-out infinite;
+        }
+
+        .wa-tooltip {
+          position: fixed;
+          bottom: 44px;
+          right: 100px;
+          background: #0B0C0E;
+          color: #ffffff;
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 12px;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 4px;
+          white-space: nowrap;
+          pointer-events: none;
+          z-index: 1000;
+          opacity: 0;
+          transform: translateX(4px);
+          transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .wa-tooltip.visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        .wa-tooltip::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          right: -5px;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+          border-left: 5px solid #0B0C0E;
+        }
+      `}</style>
+
+      {/* Pulse ring (behind button) */}
+      <div className="wa-pulse-ring" aria-hidden="true" />
+
+      {/* Tooltip */}
+      <div className={`wa-tooltip ${hovered ? 'visible' : ''}`} aria-hidden="true">
+        Escribinos
+      </div>
+
+      {/* Button */}
+      <a
+        href={whatsapp}
+        target="_blank"
         rel="noopener noreferrer"
+        className="wa-float-btn"
         aria-label="Contactar por WhatsApp"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.231.006.332.013c.101.007.242-.038.381.285.144.35.493 1.201.536 1.287.043.086.072.187.013.303-.058.117-.087.189-.174.289-.087.1-.182.223-.26.327-.083.109-.168.228-.073.393.095.165.421.693.903 1.123.621.553 1.144.723 1.309.806.165.083.262.069.359-.043.097-.112.417-.487.528-.654.112-.167.224-.14.379-.083s.983.463 1.152.548c.169.084.281.127.324.202.043.075.043.435-.101.84z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22c-5.523 0-10-4.477-10-10S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
       </a>
     </>

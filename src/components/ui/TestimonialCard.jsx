@@ -1,54 +1,129 @@
 import React from 'react';
 
-const TestimonialCard = ({ name, text, rating, className = "" }) => {
+const TestimonialCard = ({ name, text, rating, image, className = '' }) => {
+  const [hovered, setHovered] = React.useState(false);
+
   return (
-    <div 
-      className={`testimonial-card reveal ${className}`}
+    <div
+      className={`testimonial-card ${className}`}
       style={{
-        backgroundColor: "var(--light)",
-        padding: "35px",
-        borderRadius: "var(--radius-md)",
-        boxShadow: "var(--shadow-md)",
-        fontStyle: "italic",
-        position: "relative",
+        backgroundColor: '#F5F2EC',
+        padding: '40px',
+        borderRadius: '4px',
+        position: 'relative',
+        transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+        boxShadow: hovered ? '0 16px 48px rgba(0,0,0,0.10)' : 'none',
+        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        cursor: 'default',
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div 
+      {/* Comilla decorativa */}
+      <div
         style={{
-          position: "absolute",
-          top: "10px",
-          right: "20px",
-          fontSize: "4rem",
-          color: "var(--accent)",
-          opacity: 0.1,
-          fontFamily: "var(--font-serif)"
-        }}
-      >“</div>
-      
-      <div 
-        style={{
-          color: "var(--accent)",
-          marginBottom: "15px",
-          fontSize: "1.2rem",
-          display: "flex",
-          gap: "2px"
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '120px',
+          color: '#C8A96E',
+          opacity: 0.4,
+          lineHeight: '0.8',
+          marginBottom: '-20px',
+          userSelect: 'none',
         }}
       >
-        {"★".repeat(rating).padEnd(5, "☆")}
+        &ldquo;
       </div>
-      
-      <p style={{ fontSize: "1.1rem", marginBottom: "20px", color: "var(--text)" }}>"{text}"</p>
-      
-      <span 
+
+      {/* Texto del testimonio */}
+      <p
         style={{
-          marginTop: "20px",
-          fontWeight: "700",
-          fontStyle: "normal",
-          display: "block",
-          color: "var(--primary)",
-          fontSize: "1rem"
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '20px',
+          fontStyle: 'italic',
+          color: '#1A1A1A',
+          lineHeight: '1.6',
+          margin: '0',
         }}
-      >— {name}</span>
+      >
+        {text}
+      </p>
+
+      {/* Separador */}
+      <div
+        style={{
+          height: '1px',
+          backgroundColor: '#E2DDD5',
+          margin: '24px 0',
+        }}
+      />
+
+      {/* Footer */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '14px',
+        }}
+      >
+        {/* Foto o inicial */}
+        <div
+          style={{
+            width: '44px',
+            height: '44px',
+            borderRadius: '50%',
+            backgroundColor: '#1C3A52',
+            overflow: 'hidden',
+            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {image ? (
+            <img
+              src={image}
+              alt={name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : (
+            <span
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: '20px',
+                color: '#C8A96E',
+              }}
+            >
+              {name[0]}
+            </span>
+          )}
+        </div>
+
+        <div style={{ flex: 1 }}>
+          <span
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '13px',
+              fontWeight: '700',
+              color: '#1A1A1A',
+              display: 'block',
+            }}
+          >
+            {name}
+          </span>
+        </div>
+
+        {/* Estrellas */}
+        <div
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: '14px',
+            color: '#C8A96E',
+            letterSpacing: '2px',
+          }}
+        >
+          {'★'.repeat(rating || 5)}
+        </div>
+      </div>
     </div>
   );
 };

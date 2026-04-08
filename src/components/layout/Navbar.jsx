@@ -1,186 +1,232 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../ui/Button';
 import clinic from '../../data/clinic.json';
 
 const Navbar = ({ config }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [topBarVisible, setTopBarVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 50);
-      setTopBarVisible(scrollY <= 50);
+      setIsScrolled(window.scrollY > 80);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const topBarHeight = 36;
+  const whatsappLink = config?.whatsappLink || clinic.whatsappLink || `https://wa.me/${clinic.whatsapp}`;
+  const clinicName = config?.name || clinic.name;
 
-  const topBarStyle = {
+  const navStyle = {
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
-    height: `${topBarHeight}px`,
-    backgroundColor: 'var(--primary)',
-    color: 'white',
+    height: '80px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0 5%',
-    fontSize: '0.8rem',
-    fontWeight: '500',
-    zIndex: 1001,
-    transform: topBarVisible ? 'translateY(0)' : `translateY(-${topBarHeight}px)`,
-    transition: 'transform 0.3s ease',
-    letterSpacing: '0.3px',
+    padding: '0 60px',
+    zIndex: 1000,
+    transition: 'background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
+    backgroundColor: isScrolled ? 'rgba(255,255,255,0.95)' : 'transparent',
+    backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+    WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
+    borderBottom: isScrolled ? '1px solid #E2DDD5' : '1px solid transparent',
+    boxSizing: 'border-box',
   };
 
-  const navStyle = {
-    position: 'fixed',
-    top: topBarVisible ? `${topBarHeight}px` : 0,
-    left: 0,
-    width: '100%',
-    padding: isScrolled ? '15px 5%' : '25px 5%',
+  const logoStyle = {
+    fontFamily: "'Cormorant Garamond', Georgia, serif",
+    fontSize: '22px',
+    fontWeight: 600,
+    letterSpacing: '0.5px',
+    color: isScrolled ? '#0B0C0E' : '#ffffff',
+    textDecoration: 'none',
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    zIndex: 1000,
-    transition: 'var(--transition)',
-    backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
-    backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-    boxShadow: isScrolled ? 'var(--shadow-md)' : 'none',
+    gap: '8px',
+    transition: 'color 0.4s ease',
+    whiteSpace: 'nowrap',
   };
 
   const linkStyle = {
-    fontWeight: '600',
-    fontSize: '0.9rem',
+    fontFamily: "'Inter', system-ui, sans-serif",
+    fontSize: '12px',
+    fontWeight: 500,
+    letterSpacing: '2px',
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    color: isScrolled ? 'var(--text)' : 'white', // Blanco sobre el Hero
-    transition: 'var(--transition)',
+    color: isScrolled ? '#1A1A1A' : '#ffffff',
+    textDecoration: 'none',
+    transition: 'color 0.3s ease, opacity 0.3s ease',
   };
 
-  // Extraer ciudad y provincia de la dirección
-  const addressParts = clinic.address.split(',');
-  const cityProvince = addressParts.length >= 3
-    ? `${addressParts[1].trim()}, ${addressParts[2].trim()}`
-    : clinic.address;
+  const ctaStyle = {
+    fontFamily: "'Inter', system-ui, sans-serif",
+    fontSize: '11px',
+    fontWeight: 500,
+    letterSpacing: '1.5px',
+    textTransform: 'uppercase',
+    color: isScrolled ? '#ffffff' : '#ffffff',
+    textDecoration: 'none',
+    padding: '10px 24px',
+    border: isScrolled ? '1px solid #C8A96E' : '1px solid #ffffff',
+    borderRadius: '2px',
+    backgroundColor: isScrolled ? '#C8A96E' : 'transparent',
+    transition: 'all 0.4s ease',
+    whiteSpace: 'nowrap',
+  };
+
+  const hamburgerLineStyle = (transform, opacity) => ({
+    display: 'block',
+    width: '24px',
+    height: '1.5px',
+    backgroundColor: isScrolled ? '#0B0C0E' : '#ffffff',
+    transition: 'all 0.3s ease',
+    transform: transform || 'none',
+    opacity: opacity !== undefined ? opacity : 1,
+  });
 
   return (
     <>
-      {/* Top Bar */}
-      <div style={topBarStyle}>
-        <span>📍 {cityProvince}</span>
-        {clinic.emergency && (
-          <span style={{ fontWeight: '700', letterSpacing: '0.5px' }}>
-            ⚡ {clinic.emergencyText || 'Atendemos Urgencias Dentales'}
-          </span>
-        )}
-        <span>
-          📞 <a href={`tel:${clinic.phone}`} style={{ color: 'white', textDecoration: 'none' }}>{clinic.phone}</a>
-        </span>
-      </div>
+      <style>{`
+        .nav-links a:hover {
+          opacity: 0.6 !important;
+        }
+        .nav-cta:hover {
+          opacity: 0.85 !important;
+        }
+        @media (max-width: 900px) {
+          .nav-links { display: none !important; }
+          .nav-cta-desktop { display: none !important; }
+          .nav-hamburger { display: flex !important; }
+        }
+        @media (min-width: 901px) {
+          .nav-hamburger { display: none !important; }
+          .nav-mobile-menu { display: none !important; }
+        }
+        .nav-mobile-menu {
+          position: absolute;
+          top: 80px;
+          left: 0;
+          width: 100%;
+          background: #ffffff;
+          padding: 32px 40px 40px;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+          transform: translateY(0);
+          transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+          box-sizing: border-box;
+        }
+        .nav-mobile-menu.closed {
+          opacity: 0;
+          transform: translateY(-8px);
+          visibility: hidden;
+          pointer-events: none;
+        }
+        .nav-mobile-menu.open {
+          opacity: 1;
+          transform: translateY(0);
+          visibility: visible;
+          pointer-events: all;
+        }
+        .nav-mobile-menu a {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #1A1A1A;
+          text-decoration: none;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #E2DDD5;
+        }
+        .nav-mobile-menu a:last-of-type {
+          border-bottom: none;
+        }
+        .nav-mobile-cta {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: #ffffff;
+          text-decoration: none;
+          padding: 14px 24px;
+          background-color: #C8A96E;
+          border: 1px solid #C8A96E;
+          border-radius: 2px;
+          text-align: center;
+          margin-top: 8px;
+        }
+      `}</style>
 
-    <nav style={navStyle}>
-      <a href="#" style={{ 
-        fontSize: '1.5rem', 
-        fontWeight: '800', 
-        fontFamily: 'var(--font-serif)', 
-        color: isScrolled ? 'var(--primary)' : 'white' // Blanco sobre el Hero
-      }}>
-        {config.name}
-      </a>
+      <nav style={navStyle}>
+        {/* Logo */}
+        <a href="#hero" style={logoStyle}>
+          <span style={{ color: '#C8A96E', fontSize: '10px', lineHeight: 1 }}>●</span>
+          {clinicName}
+        </a>
 
-      <style>
-        {`
-          .nav-desktop-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-          }
-          .nav-desktop-links a:hover { color: var(--accent); opacity: 0.8; }
-          
-          .mobile-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-          }
-          .mobile-toggle span {
-            width: 25px;
-            height: 2px;
-            background-color: ${isScrolled ? 'var(--primary)' : 'white'};
-            transition: var(--transition);
-          }
+        {/* Desktop Links */}
+        <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '36px' }}>
+          <a href="#servicios" style={linkStyle}>Servicios</a>
+          <a href="#ventajas" style={linkStyle}>Nosotros</a>
+          <a href="#testimonios" style={linkStyle}>Opiniones</a>
+          <a href="#contacto" style={linkStyle}>Contacto</a>
+        </div>
 
-          .mobile-menu {
-            display: none; /* Oculto por defecto en desktop */
-          }
+        {/* CTA Desktop */}
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-cta nav-cta-desktop"
+          style={ctaStyle}
+        >
+          Reservar Turno
+        </a>
 
-          @media (max-width: 768px) {
-            .nav-desktop-links { display: none !important; }
-            .mobile-toggle { display: flex !important; }
-            
-            .mobile-menu {
-              display: flex;
-              position: absolute;
-              top: 100%;
-              left: 0;
-              width: 100%;
-              background: white;
-              padding: 40px;
-              flex-direction: column;
-              gap: 20px;
-              box-shadow: var(--shadow-lg);
-              transform: translateY(${isOpen ? '0' : '-130%'});
-              opacity: ${isOpen ? '1' : '0'};
-              transition: var(--transition);
-              z-index: -1;
-              visibility: ${isOpen ? 'visible' : 'hidden'};
-            }
+        {/* Hamburger */}
+        <button
+          className="nav-hamburger"
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '4px',
+            display: 'none',
+            flexDirection: 'column',
+            gap: '7px',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          aria-label="Abrir menú"
+        >
+          <span style={hamburgerLineStyle(isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none')}></span>
+          <span style={hamburgerLineStyle('none', isOpen ? 0 : 1)}></span>
+          <span style={hamburgerLineStyle(isOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none')}></span>
+        </button>
 
-            .mobile-menu a {
-                color: var(--text);
-                font-weight: 700;
-                font-size: 1.1rem;
-            }
-          }
-        `}
-      </style>
-
-      <div className="nav-desktop-links">
-        <a href="#hero" style={linkStyle}>Inicio</a>
-        <a href="#servicios" style={linkStyle}>Servicios</a>
-        <a href="#ventajas" style={linkStyle}>Nosotros</a>
-        <a href="#testimonios" style={linkStyle}>Opiniones</a>
-        <a href="#contacto" style={linkStyle}>Contacto</a>
-        <Button href={config.whatsappLink || `https://wa.me/${config.whatsapp}`} 
-                variant={isScrolled ? "primary" : "accent"} 
-                style={{ padding: '10px 20px' }}>
-          Pedir Turno
-        </Button>
-      </div>
-
-      <div className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
-        <span style={{ transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none' }}></span>
-        <span style={{ opacity: isOpen ? 0 : 1 }}></span>
-        <span style={{ transform: isOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }}></span>
-      </div>
-
-      <div className="mobile-menu">
-        <a href="#hero" onClick={() => setIsOpen(false)}>Inicio</a>
-        <a href="#servicios" onClick={() => setIsOpen(false)}>Servicios</a>
-        <a href="#ventajas" onClick={() => setIsOpen(false)}>Nosotros</a>
-        <a href="#contacto" onClick={() => setIsOpen(false)}>Contacto</a>
-        <Button href={config.whatsappLink || `https://wa.me/${config.whatsapp}`} variant="primary">
-          WhatsApp
-        </Button>
-      </div>
-    </nav>
+        {/* Mobile Menu */}
+        <div className={`nav-mobile-menu ${isOpen ? 'open' : 'closed'}`}>
+          <a href="#servicios" onClick={() => setIsOpen(false)}>Servicios</a>
+          <a href="#ventajas" onClick={() => setIsOpen(false)}>Nosotros</a>
+          <a href="#testimonios" onClick={() => setIsOpen(false)}>Opiniones</a>
+          <a href="#contacto" onClick={() => setIsOpen(false)}>Contacto</a>
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-mobile-cta"
+            onClick={() => setIsOpen(false)}
+          >
+            Reservar Turno
+          </a>
+        </div>
+      </nav>
     </>
   );
 };

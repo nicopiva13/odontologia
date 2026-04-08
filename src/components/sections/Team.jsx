@@ -1,128 +1,146 @@
 import React from 'react';
 import clinic from '../../data/clinic.json';
 
-const Team = ({ colors }) => {
+const Team = () => {
   const team = clinic.team || [];
 
   return (
     <section
       id="equipo"
       style={{
-        backgroundColor: 'var(--primary)',
-        padding: '100px 0',
+        backgroundColor: '#0B0C0E',
+        padding: '120px 0',
       }}
     >
-      <div className="container">
-        <div className="text-center mb-40 reveal">
-          <h2
-            style={{
-              fontSize: '2.5rem',
-              marginBottom: '1rem',
-              color: '#ffffff',
-            }}
-          >
-            Nuestro Equipo
-          </h2>
+      <div
+        style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 60px',
+        }}
+      >
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
           <p
             style={{
-              maxWidth: '600px',
-              marginInline: 'auto',
-              color: 'rgba(255,255,255,0.75)',
-              fontSize: '1.05rem',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '11px',
+              letterSpacing: '3px',
+              textTransform: 'uppercase',
+              color: '#C8A96E',
+              marginBottom: '24px',
             }}
           >
-            Profesionales comprometidos con tu salud y tu sonrisa.
+            ● Nuestro Equipo
           </p>
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '52px',
+              fontWeight: '600',
+              fontStyle: 'italic',
+              color: '#FFFFFF',
+              lineHeight: '1.15',
+              margin: '0',
+            }}
+          >
+            Los Profesionales<br />Detrás de Tu Sonrisa
+          </h2>
         </div>
 
+        {/* Grid */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '30px',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '40px',
           }}
         >
           {team.map((member, index) => (
-            <TeamCard key={index} member={member} index={index} />
+            <TeamCard key={index} member={member} />
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          #equipo .team-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };
 
-const TeamCard = ({ member, index }) => {
+const TeamCard = ({ member }) => {
   const initial = member.name.replace('Dr. ', '').replace('Dra. ', '')[0] || '?';
+  const [imgError, setImgError] = React.useState(false);
 
   return (
     <div
-      className={`reveal delay-${(index % 3) + 1}`}
       style={{
-        backgroundColor: 'rgba(255,255,255,0.1)',
-        borderRadius: '16px',
-        padding: '40px 30px',
         textAlign: 'center',
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-        backdropFilter: 'blur(6px)',
-        border: '1px solid rgba(255,255,255,0.15)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-8px)';
-        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.25)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = 'none';
+        padding: '40px 24px 40px',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
       }}
     >
-      {/* Avatar circular */}
+      {/* Foto circular */}
       <div
         style={{
-          width: '110px',
-          height: '110px',
+          width: '120px',
+          height: '120px',
           borderRadius: '50%',
           overflow: 'hidden',
           margin: '0 auto 24px',
-          border: '3px solid var(--accent)',
-          backgroundColor: 'rgba(255,255,255,0.2)',
+          border: '2px solid #C8A96E',
+          backgroundColor: '#1C3A52',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexShrink: 0,
         }}
       >
-        <img
-          src={member.image}
-          alt={member.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            e.currentTarget.parentElement.querySelector('.team-initial').style.display = 'flex';
-          }}
-        />
-        <span
-          className="team-initial"
-          style={{
-            display: 'none',
-            fontSize: '2.5rem',
-            fontWeight: '700',
-            color: '#ffffff',
-            width: '100%',
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {initial}
-        </span>
+        {!imgError ? (
+          <img
+            src={member.image}
+            alt={member.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '48px',
+              color: '#C8A96E',
+              lineHeight: 1,
+            }}
+          >
+            {initial}
+          </span>
+        )}
       </div>
+
+      {/* Línea decorativa */}
+      <div
+        style={{
+          width: '32px',
+          height: '1px',
+          backgroundColor: '#C8A96E',
+          margin: '0 auto 20px',
+        }}
+      />
 
       {/* Nombre */}
       <h3
         style={{
-          color: '#ffffff',
-          fontSize: '1.25rem',
-          fontWeight: '700',
-          marginBottom: '8px',
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '28px',
+          fontWeight: '600',
+          color: '#FFFFFF',
+          margin: '0 0 8px',
+          lineHeight: 1.2,
         }}
       >
         {member.name}
@@ -131,22 +149,24 @@ const TeamCard = ({ member, index }) => {
       {/* Especialidad */}
       <p
         style={{
-          color: 'var(--accent)',
-          fontSize: '0.9rem',
-          fontWeight: '600',
-          marginBottom: '12px',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: '12px',
+          color: '#C8A96E',
           textTransform: 'uppercase',
-          letterSpacing: '0.5px',
+          letterSpacing: '2px',
+          margin: '0 0 8px',
         }}
       >
         {member.specialty}
       </p>
 
-      {/* Años de experiencia */}
+      {/* Años */}
       <p
         style={{
-          color: 'rgba(255,255,255,0.7)',
-          fontSize: '0.9rem',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: '13px',
+          color: 'rgba(255,255,255,0.5)',
+          margin: '0',
         }}
       >
         {member.years} años de experiencia

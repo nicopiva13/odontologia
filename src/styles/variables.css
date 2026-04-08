@@ -1,24 +1,49 @@
-/* variables.css */
+/* ============================================
+   PRESTIGE DENTAL STUDIO — Design System
+   Variables CSS
+   ============================================ */
+
 :root {
-  /* Fallbacks - Serán sobrescritos por el objeto style en App.jsx */
-  --primary: #1a6b5e;
-  --accent: #f0c040;
-  --bg: #f9f8f5;
-  --dark: #111111;
-  --text: #2a2a2a;
-  --light: #ffffff;
-  
-  /* Otras variables de diseño */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
-  
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-full: 9999px;
-  
-  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --font-serif: 'Fraunces', serif;
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  /* ——— Color Palette ——— */
+  --bg: #F5F2EC;
+  --surface: #FFFFFF;
+  --dark: #0B0C0E;
+  --primary: #1C3A52;
+  --accent: #C8A96E;
+  --accent-light: #F0E6CC;
+  --text: #1A1A1A;
+  --text-muted: #8A8A8A;
+  --border: #E2DDD5;
+  --mint: #4ECDC4;
+
+  /* ——— Typography ——— */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* ——— Border Radius ——— */
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* ——— Shadows ——— */
+  --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.14);
+
+  /* ——— Transitions ——— */
+  --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ——— Spacing & Layout ——— */
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 64px;
+  --gap-2xl: 96px;
+
+  --section-padding: 120px 0;
+  --section-padding-mobile: 72px 0;
+
+  --container-max: 1280px;
+  --container-padding: 40px;
+  --container-padding-mobile: 20px;
 }

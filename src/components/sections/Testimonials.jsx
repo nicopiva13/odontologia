@@ -3,27 +3,64 @@ import TestimonialCard from '../ui/TestimonialCard';
 
 const Testimonials = ({ testimonials }) => {
   return (
-    <section id="testimonios" style={{ backgroundColor: 'white' }}>
-      <div className="container">
-        <div className="text-center mb-40 reveal">
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Voces Protagonistas</h2>
-          <p style={{ maxWidth: '600px', marginInline: 'auto', color: 'rgba(0,0,0,0.6)' }}>
-            Lo que nuestros pacientes dicen de su experiencia con nosotros.
+    <section
+      id="testimonios"
+      style={{
+        backgroundColor: '#FFFFFF',
+        padding: '120px 0',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 60px',
+        }}
+      >
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+          <p
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '11px',
+              letterSpacing: '3px',
+              textTransform: 'uppercase',
+              color: '#C8A96E',
+              marginBottom: '24px',
+            }}
+          >
+            ● Testimonios
           </p>
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '52px',
+              fontWeight: '600',
+              fontStyle: 'italic',
+              color: '#1A1A1A',
+              lineHeight: '1.15',
+              margin: '0',
+            }}
+          >
+            Lo Que Dicen<br />Nuestros Pacientes
+          </h2>
         </div>
 
-        <div className="testimonials-grid stagger-group" style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-          gap: '30px' 
-        }}>
+        {/* Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '30px',
+          }}
+        >
           {testimonials.map((t, index) => (
-            <TestimonialCard 
+            <TestimonialCard
               key={index}
               name={t.name}
               text={t.text}
               rating={t.rating}
-              className={`delay-${index + 1}`}
+              image={t.image}
             />
           ))}
         </div>

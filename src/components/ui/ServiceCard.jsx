@@ -1,81 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ServiceCard = ({ icon, title, desc, image, className = "", whatsappNumber }) => {
+const orderNumbers = ['01', '02', '03', '04', '05', '06'];
+
+const ServiceCard = ({ icon, title, desc, index = 0, whatsappNumber }) => {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <div
-      className={`service-card reveal ${className}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
-        backgroundColor: "var(--light)",
-        borderRadius: "var(--radius-lg)", // Más redondeado
-        boxShadow: "var(--shadow-md)",
-        transition: "var(--transition)",
-        textAlign: "left", // Texto a la izquierda para estilo premium
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        overflow: "hidden" // Para redondear la imagen
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-10px)";
-        e.currentTarget.style.boxShadow = "var(--shadow-lg)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "var(--shadow-md)";
+        backgroundColor: hovered ? '#0B0C0E' : '#FFFFFF',
+        padding: '48px 40px',
+        position: 'relative',
+        transition: 'all 0.4s ease',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '320px',
+        cursor: 'default',
       }}
     >
-      {/* Imagen de referencia */}
-      <div style={{ position: 'relative', height: '220px', width: '100%', overflow: 'hidden' }}>
-        <img
-          src={image}
-          alt={title}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '20px',
-            right: '20px',
-            fontSize: "1.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "50px",
-            height: "50px",
-            borderRadius: "50%",
-            backgroundColor: "white",
-            boxShadow: "var(--shadow-md)",
-            zIndex: 2
-          }}
-        >
-          {icon}
-        </div>
+      {/* Número orden — top right absolute */}
+      <div style={{
+        position: 'absolute',
+        top: '24px',
+        right: '32px',
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: '72px',
+        fontWeight: '700',
+        color: hovered ? 'rgba(255,255,255,0.08)' : '#E2DDD5',
+        lineHeight: '1',
+        userSelect: 'none',
+        transition: 'all 0.4s ease',
+        pointerEvents: 'none',
+      }}>
+        {orderNumbers[index] || '01'}
       </div>
 
-      <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <h3 style={{ marginBottom: "15px", fontSize: "1.4rem", fontWeight: '700' }}>{title}</h3>
-        <p style={{ color: "rgba(0,0,0,0.6)", fontSize: "0.95rem", lineHeight: '1.6', flexGrow: 1 }}>{desc}</p>
-        {whatsappNumber && (
-          <a
-            href={`https://wa.me/${whatsappNumber}?text=Hola, me interesa el servicio de ${encodeURIComponent(title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-block',
-              marginTop: '20px',
-              color: 'var(--primary)',
-              fontWeight: '700',
-              fontSize: '0.95rem',
-              textDecoration: 'none',
-              transition: 'opacity 0.2s ease',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
-          >
-            Consultar →
-          </a>
-        )}
+      {/* Ícono */}
+      <div style={{
+        fontSize: '36px',
+        color: '#1C3A52',
+        marginBottom: '20px',
+        lineHeight: '1',
+      }}>
+        {icon}
       </div>
+
+      {/* Título */}
+      <h3 style={{
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: '26px',
+        fontWeight: '600',
+        color: hovered ? '#FFFFFF' : '#0B0C0E',
+        margin: '0 0 12px 0',
+        lineHeight: '1.2',
+        transition: 'color 0.4s ease',
+      }}>
+        {title}
+      </h3>
+
+      {/* Descripción */}
+      <p style={{
+        fontFamily: "'Inter', system-ui, sans-serif",
+        fontSize: '14px',
+        color: hovered ? 'rgba(255,255,255,0.65)' : '#8A8A8A',
+        lineHeight: '1.7',
+        margin: 0,
+        flexGrow: 1,
+        transition: 'color 0.4s ease',
+      }}>
+        {desc}
+      </p>
+
+      {/* Link Consultar */}
+      {whatsappNumber && (
+        <a
+          href={`https://wa.me/${whatsappNumber}?text=Hola, me interesa el servicio de ${encodeURIComponent(title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'block',
+            marginTop: '24px',
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: '12px',
+            fontWeight: '600',
+            color: '#C8A96E',
+            letterSpacing: '1px',
+            textDecoration: 'none',
+            textTransform: 'uppercase',
+            transition: 'opacity 0.2s ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.75'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+        >
+          Consultar →
+        </a>
+      )}
     </div>
   );
 };

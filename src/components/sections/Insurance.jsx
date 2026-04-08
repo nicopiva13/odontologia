@@ -3,80 +3,116 @@ import clinic from '../../data/clinic.json';
 
 const Insurance = () => {
   return (
-    <section style={{ backgroundColor: 'var(--bg)', padding: '80px 5%' }}>
-      <div className="container">
-
-        {/* Encabezado */}
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <h2 style={{ fontSize: '2.2rem', marginBottom: '12px', color: 'var(--text)' }}>
-            Trabajamos con tu cobertura
-          </h2>
-          <p style={{ fontSize: '1.05rem', color: 'rgba(0,0,0,0.5)', maxWidth: '520px', margin: '0 auto' }}>
-            Aceptamos las principales obras sociales y prepagas
-          </p>
-        </div>
-
-        {/* Chips / Pills de coberturas */}
-        <div className="reveal" style={{
+    <section
+      style={{
+        backgroundColor: '#FFFFFF',
+        padding: '80px 0',
+        borderTop: '1px solid #E2DDD5',
+        borderBottom: '1px solid #E2DDD5',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 60px',
           display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '14px',
-          justifyContent: 'center',
-          marginBottom: '40px',
-        }}>
-          {clinic.insurance.map((name, i) => (
-            <div
-              key={i}
+          gap: '40px',
+        }}
+      >
+        {/* Izquierda: texto */}
+        <div style={{ flexShrink: 0 }}>
+          <h3
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '28px',
+              fontWeight: '600',
+              color: '#1A1A1A',
+              margin: '0 0 8px',
+            }}
+          >
+            Trabajamos con tu cobertura
+          </h3>
+          {clinic.financing && (
+            <p
               style={{
-                backgroundColor: 'white',
-                border: '1.5px solid rgba(0,0,0,0.1)',
-                borderRadius: '50px',
-                padding: '10px 22px',
-                fontSize: '0.95rem',
-                fontWeight: '600',
-                color: 'var(--text)',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.2s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'var(--primary)';
-                e.currentTarget.style.color = 'var(--primary)';
-                e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)';
-                e.currentTarget.style.color = 'var(--text)';
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+                fontFamily: "'Inter', system-ui, sans-serif",
+                fontSize: '13px',
+                color: '#8A8A8A',
+                margin: '0',
               }}
             >
-              {name}
-            </div>
-          ))}
+              {clinic.financing}
+            </p>
+          )}
         </div>
 
-        {/* Financiamiento */}
-        {clinic.financing && (
-          <div className="reveal" style={{ textAlign: 'center' }}>
-            <p style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              backgroundColor: 'var(--primary)',
-              color: 'white',
-              borderRadius: '50px',
-              padding: '12px 28px',
-              fontSize: '0.95rem',
-              fontWeight: '600',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
-            }}>
-              💳 {clinic.financing}
-            </p>
-          </div>
-        )}
-
+        {/* Derecha: pills */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '12px',
+            justifyContent: 'flex-end',
+          }}
+        >
+          {clinic.insurance.map((name, i) => (
+            <InsurancePill key={i} name={name} />
+          ))}
+          {clinic.financing && (
+            <FinancingPill label={clinic.financing} />
+          )}
+        </div>
       </div>
     </section>
+  );
+};
+
+const InsurancePill = ({ name }) => {
+  const [hovered, setHovered] = React.useState(false);
+
+  return (
+    <div
+      style={{
+        border: `1px solid ${hovered ? '#1C3A52' : '#E2DDD5'}`,
+        padding: '8px 20px',
+        borderRadius: '100px',
+        fontFamily: "'Inter', system-ui, sans-serif",
+        fontSize: '12px',
+        fontWeight: '500',
+        color: hovered ? '#1C3A52' : '#8A8A8A',
+        cursor: 'default',
+        transition: 'border-color 0.25s ease, color 0.25s ease',
+        whiteSpace: 'nowrap',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {name}
+    </div>
+  );
+};
+
+const FinancingPill = ({ label }) => {
+  return (
+    <div
+      style={{
+        backgroundColor: '#F0E6CC',
+        border: '1px solid #C8A96E',
+        padding: '8px 20px',
+        borderRadius: '100px',
+        fontFamily: "'Inter', system-ui, sans-serif",
+        fontSize: '12px',
+        fontWeight: '500',
+        color: '#8A6A30',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      💳 {label}
+    </div>
   );
 };
 

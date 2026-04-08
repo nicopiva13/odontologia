@@ -1,14 +1,20 @@
-/* globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+/* ============================================
+   PRESTIGE DENTAL STUDIO — Global Styles
+   ============================================ */
 
-* {
+/* ——— Reset ——— */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ——— Base ——— */
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
   overflow-x: hidden;
 }
 
@@ -17,33 +23,36 @@ body {
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.7;
-  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
+/* ——— Scrollbar (Webkit) ——— */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
-  opacity: 0.3;
-  border-radius: 10px;
+  border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-serif);
-  line-height: 1.1;
-  color: var(--dark);
+/* ——— Scrollbar (Firefox) ——— */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--bg);
 }
 
+/* ——— Base elements ——— */
 a {
   text-decoration: none;
   color: inherit;
@@ -62,17 +71,25 @@ button {
   outline: none;
 }
 
-section {
-  padding: 100px 5%;
-  position: relative;
+img {
+  max-width: 100%;
+  display: block;
 }
 
+/* ——— Container ——— */
 .container {
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin: 0 auto;
+  padding: 0 var(--container-padding);
 }
 
-/* Scroll reveal animations */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--container-padding-mobile);
+  }
+}
+
+/* ——— Scroll Reveal Animations ——— */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -84,21 +101,62 @@ section {
   transform: translateY(0);
 }
 
-.stagger-group .reveal:nth-child(1) { transition-delay: 0.1s; }
-.stagger-group .reveal:nth-child(2) { transition-delay: 0.2s; }
-.stagger-group .reveal:nth-child(3) { transition-delay: 0.3s; }
-.stagger-group .reveal:nth-child(4) { transition-delay: 0.4s; }
-.stagger-group .reveal:nth-child(5) { transition-delay: 0.5s; }
-.stagger-group .reveal:nth-child(6) { transition-delay: 0.6s; }
+/* Stagger delays */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+.stagger-6 { transition-delay: 0.6s; }
 
-/* Utility classes */
-.text-center { text-align: center; }
-.mt-20 { margin-top: 20px; }
-.mb-20 { margin-bottom: 20px; }
-.mb-40 { margin-bottom: 40px; }
+/* ——— Typography Utility Classes ——— */
 
-@media (max-width: 768px) {
-  section {
-    padding: 60px 5%;
-  }
+/* Eyebrow / tag label */
+.section-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-block;
 }
+
+/* Hero-level headline */
+.display-heading {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+/* Section headline */
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+/* Body paragraph */
+.body-text {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+/* Decorative accent divider */
+.divider {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+  margin: 20px 0;
+}
+
+/* ——— Utility ——— */
+.text-center { text-align: center; }
+.text-left   { text-align: left; }
+.text-right  { text-align: right; }

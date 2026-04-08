@@ -1,261 +1,366 @@
 import React, { useState } from 'react';
-import Button from '../ui/Button';
+import clinic from '../../data/clinic.json';
 
 const Contact = ({ config }) => {
-  const [formState, setFormState] = useState({ name: '', phone: '', message: '' });
+  const cfg = config || clinic;
+  const services = clinic.services || [];
+
+  const [formState, setFormState] = useState({
+    name: '',
+    phone: '',
+    service: '',
+    message: '',
+  });
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, phone, message } = formState;
+    const { name, phone, service, message } = formState;
 
-    // Crear el mensaje de WhatsApp
-    const whatsappMessage = `*Nueva Consulta desde la Web - Risus*\n\n` +
+    const whatsappMessage =
+      `*Nueva Consulta desde la Web*\n\n` +
       `👤 *Nombre:* ${name}\n` +
-      `📱 *WhatsApp:* ${phone}\n` +
-      `💬 *Mensaje:* ${message || "Sin consulta específica"}`;
+      `📱 *Teléfono:* ${phone}\n` +
+      (service ? `🦷 *Servicio:* ${service}\n` : '') +
+      `💬 *Mensaje:* ${message || 'Sin consulta específica'}`;
 
     const encodedText = encodeURIComponent(whatsappMessage);
-    const whatsappUrl = `https://wa.me/${config.whatsapp}?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/${cfg.whatsapp}?text=${encodedText}`;
 
-    // Abrir WhatsApp en una nueva pestaña
     window.open(whatsappUrl, '_blank');
-
     setIsSubmit(true);
     setTimeout(() => setIsSubmit(false), 5000);
-    setFormState({ name: '', phone: '', message: '' });
+    setFormState({ name: '', phone: '', service: '', message: '' });
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
+    setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const inputStyle = {
+  const fieldStyle = {
     width: '100%',
-    padding: '18px 20px',
-    border: '1.5px solid rgba(0,0,0,0.08)',
-    borderRadius: '12px',
-    fontSize: '1rem',
-    fontFamily: 'inherit',
+    padding: '14px 0',
+    border: 'none',
+    borderBottom: '1.5px solid #E2DDD5',
+    fontSize: '14px',
+    fontFamily: "'Inter', system-ui, sans-serif",
+    backgroundColor: 'transparent',
     outline: 'none',
-    transition: 'all 0.3s ease',
-    marginBottom: '20px',
-    backgroundColor: '#fdfdfd'
+    color: '#1A1A1A',
+    transition: 'border-color 0.3s ease',
+    boxSizing: 'border-box',
   };
 
   const labelStyle = {
     display: 'block',
-    marginBottom: '10px',
-    fontWeight: '700',
-    fontSize: '0.9rem',
-    color: 'var(--text)',
-    letterSpacing: '0.5px'
+    fontFamily: "'Inter', system-ui, sans-serif",
+    fontSize: '11px',
+    letterSpacing: '1.5px',
+    textTransform: 'uppercase',
+    color: '#8A8A8A',
+    marginBottom: '4px',
+    marginTop: '28px',
   };
 
   return (
-    <section id="contacto" style={{ backgroundColor: '#fff', padding: '100px 5%' }}>
-      <div className="container">
-        <div style={{
+    <section
+      id="contacto"
+      style={{ padding: '0' }}
+    >
+      <div
+        style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          boxShadow: '0 30px 60px rgba(0,0,0,0.12)',
-          borderRadius: '30px',
-          overflow: 'hidden',
-          backgroundColor: 'white'
-        }}>
-          {/* Lado Izquierdo: Información de Contacto (Dark) */}
-          <div className="reveal" style={{
-            backgroundColor: 'var(--primary)',
-            color: 'white',
-            padding: '60px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            {/* Decoración sutil de fondo */}
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: '200px',
-              height: '200px',
-              background: 'rgba(255,255,255,0.05)',
-              borderRadius: '50%'
-            }}></div>
+          gridTemplateColumns: '1fr 1fr',
+        }}
+      >
+        {/* Columna izquierda oscura */}
+        <div
+          style={{
+            backgroundColor: '#1C3A52',
+            padding: '100px 80px',
+            color: '#FFFFFF',
+          }}
+        >
+          {/* Tag */}
+          <p
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '11px',
+              letterSpacing: '3px',
+              textTransform: 'uppercase',
+              color: '#C8A96E',
+              marginBottom: '24px',
+            }}
+          >
+            ● Contacto
+          </p>
 
-            <div>
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'white' }}>Planificá tu Consulta</h2>
-              <p style={{ fontSize: '1.1rem', marginBottom: '40px', opacity: 0.9 }}>
-                Estamos a solo un paso de alcanzar la sonrisa que siempre quisiste. Escribimos y nos pondremos en contacto a la brevedad.
-              </p>
+          {/* Título */}
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '52px',
+              fontWeight: '600',
+              fontStyle: 'italic',
+              color: '#FFFFFF',
+              lineHeight: '1.15',
+              margin: '0 0 48px',
+            }}
+          >
+            Estamos Aquí<br />Para Vos
+          </h2>
 
-              <div style={{ display: 'grid', gap: '25px' }}>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  <div style={{ fontSize: '1.4rem' }}>📍</div>
-                  <div>
-                    <h4 style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7 }}>Ubicación</h4>
-                    <p style={{ margin: 0, fontWeight: '600' }}>{config.address}</p>
-                  </div>
-                </div>
+          {/* Info items */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', marginBottom: '48px' }}>
+            {/* Dirección */}
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span
+                style={{
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.85)',
+                  lineHeight: '1.5',
+                }}
+              >
+                {cfg.address}
+              </span>
+            </div>
 
-                {/* Mapa placeholder */}
-                {config.googleMapsEmbed ? (
-                  <div style={{ borderRadius: '12px', overflow: 'hidden', marginTop: '8px' }}>
-                    <iframe
-                      src={config.googleMapsEmbed}
-                      width="100%"
-                      height="160"
-                      style={{ border: 'none', display: 'block' }}
-                      allowFullScreen=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Ubicación en Google Maps"
-                    />
-                  </div>
-                ) : (
-                  <a
-                    href={config.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(config.address)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+            {/* Teléfono */}
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <a
+                href={`tel:${cfg.phone}`}
+                style={{
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.85)',
+                  textDecoration: 'none',
+                }}
+              >
+                {cfg.phone}
+              </a>
+            </div>
+
+            {/* Email */}
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <a
+                href={`mailto:${cfg.email}`}
+                style={{
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.85)',
+                  textDecoration: 'none',
+                }}
+              >
+                {cfg.email}
+              </a>
+            </div>
+
+            {/* Horarios */}
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}>
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <div>
+                {(cfg.schedule || []).map((s, i) => (
+                  <div
+                    key={i}
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      marginTop: '8px',
-                      padding: '12px 16px',
-                      backgroundColor: 'rgba(255,255,255,0.1)',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '10px',
-                      color: 'white',
-                      textDecoration: 'none',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      transition: 'background 0.2s ease',
+                      fontFamily: "'Inter', system-ui, sans-serif",
+                      fontSize: '14px',
+                      color: 'rgba(255,255,255,0.85)',
+                      lineHeight: '1.7',
                     }}
-                    onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.18)'}
-                    onMouseLeave={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
                   >
-                    📍 Ver en Google Maps →
-                  </a>
-                )}
-
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  <div style={{ fontSize: '1.4rem' }}>📞</div>
-                  <div>
-                    <h4 style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7 }}>Teléfono / Celular</h4>
-                    <p style={{ margin: 0, fontWeight: '600' }}>{config.phone}</p>
+                    {s.day}: <strong>{s.hours}</strong>
                   </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  <div style={{ fontSize: '1.4rem' }}>📷</div>
-                  <div>
-                    <h4 style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7 }}>Instagram</h4>
-                    <p style={{ margin: 0, fontWeight: '600' }}>@{config.instagram}</p>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  <div style={{ fontSize: '1.4rem' }}>📧</div>
-                  <div>
-                    <h4 style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7 }}>Email</h4>
-                    <p style={{ margin: 0, fontWeight: '600' }}>{config.email}</p>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
-
-            <div style={{ marginTop: '50px', paddingTop: '30px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-              <h4 style={{ marginBottom: '15px', fontSize: '1rem' }}>Horarios de Atención</h4>
-              {config.schedule.map((s, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', opacity: 0.8, fontSize: '0.9rem' }}>
-                  <span>{s.day}</span>
-                  <span style={{ fontWeight: '700' }}>{s.hours}</span>
-                </div>
-              ))}
             </div>
           </div>
 
-          {/* Lado Derecho: Formulario (WhatsApp) */}
-          <div className="reveal" style={{ padding: '60px', backgroundColor: '#fff' }}>
-            <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Iniciá tu turno ahora</h3>
-            <p style={{ color: 'rgba(0,0,0,0.5)', marginBottom: '40px' }}>Completá los datos y te redirigiremos a WhatsApp.</p>
+          {/* Botón WhatsApp */}
+          <a
+            href={`https://wa.me/${cfg.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              backgroundColor: '#25D366',
+              color: '#FFFFFF',
+              padding: '16px 32px',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '12px',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              fontWeight: '600',
+              marginBottom: '20px',
+            }}
+          >
+            Escribinos por WhatsApp
+          </a>
 
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label style={labelStyle}>Cómo te llamás?</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Tu nombre completo"
-                  required
-                  style={inputStyle}
-                  value={formState.name}
-                  onChange={handleInputChange}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--primary)';
-                    e.target.style.boxShadow = '0 5px 15px rgba(26, 107, 94, 0.1)';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(0,0,0,0.08)';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
-              </div>
+          <br />
 
-              <div>
-                <label style={labelStyle}>Tu WhatsApp / Celular</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Ej: +54 9 353 ..."
-                  required
-                  style={inputStyle}
-                  value={formState.phone}
-                  onChange={handleInputChange}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--primary)';
-                    e.target.style.boxShadow = '0 5px 15px rgba(26, 107, 94, 0.1)';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(0,0,0,0.08)';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
-              </div>
+          {/* Link maps */}
+          <a
+            href={cfg.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(cfg.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '12px',
+              color: 'rgba(255,255,255,0.5)',
+              textDecoration: 'none',
+              transition: 'color 0.3s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = '#C8A96E'}
+            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}
+          >
+            Ver en Google Maps →
+          </a>
+        </div>
 
-              <div>
-                <label style={labelStyle}>En qué podemos ayudarte?</label>
-                <textarea
-                  rows="4"
-                  name="message"
-                  placeholder="Contanos brevemente tu consulta..."
-                  style={{ ...inputStyle, resize: 'none' }}
-                  value={formState.message}
-                  onChange={handleInputChange}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--primary)';
-                    e.target.style.boxShadow = '0 5px 15px rgba(26, 107, 94, 0.1)';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(0,0,0,0.08)';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
-              </div>
+        {/* Columna derecha clara */}
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            padding: '100px 80px',
+          }}
+        >
+          <h3
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '36px',
+              fontWeight: '600',
+              color: '#1A1A1A',
+              margin: '0 0 12px',
+            }}
+          >
+            Reservá tu Turno
+          </h3>
+          <p
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '14px',
+              color: '#8A8A8A',
+              margin: '0 0 8px',
+            }}
+          >
+            Completá el formulario y te contactamos a la brevedad
+          </p>
 
-              <Button type="submit" variant={isSubmit ? "primary" : "accent"} style={{ width: '100%', padding: '20px', fontSize: '1.1rem' }}>
-                {isSubmit ? "✅ Redirigiendo..." : "Solicitar Turno por WhatsApp"}
-              </Button>
+          <form onSubmit={handleSubmit}>
+            {/* Nombre */}
+            <div>
+              <label style={labelStyle}>Nombre completo</label>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="Tu nombre"
+                value={formState.name}
+                onChange={handleInputChange}
+                style={fieldStyle}
+                onFocus={e => e.target.style.borderBottomColor = '#1C3A52'}
+                onBlur={e => e.target.style.borderBottomColor = '#E2DDD5'}
+              />
+            </div>
 
-              <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.85rem', color: 'rgba(0,0,0,0.4)', fontWeight: '500' }}>
-                * Al hacer clic, se abrirá tu aplicación de WhatsApp.
-              </p>
-            </form>
-          </div>
+            {/* Teléfono */}
+            <div>
+              <label style={labelStyle}>Teléfono</label>
+              <input
+                type="tel"
+                name="phone"
+                required
+                placeholder="+54 9 ..."
+                value={formState.phone}
+                onChange={handleInputChange}
+                style={fieldStyle}
+                onFocus={e => e.target.style.borderBottomColor = '#1C3A52'}
+                onBlur={e => e.target.style.borderBottomColor = '#E2DDD5'}
+              />
+            </div>
+
+            {/* Servicio */}
+            <div>
+              <label style={labelStyle}>Servicio</label>
+              <select
+                name="service"
+                value={formState.service}
+                onChange={handleInputChange}
+                style={{
+                  ...fieldStyle,
+                  cursor: 'pointer',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8A8A' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 0 center',
+                  paddingRight: '20px',
+                }}
+                onFocus={e => e.target.style.borderBottomColor = '#1C3A52'}
+                onBlur={e => e.target.style.borderBottomColor = '#E2DDD5'}
+              >
+                <option value="">Seleccioná un servicio</option>
+                {services.map((s, i) => (
+                  <option key={i} value={s.title}>{s.title}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Mensaje */}
+            <div>
+              <label style={labelStyle}>Mensaje</label>
+              <textarea
+                name="message"
+                rows="4"
+                placeholder="Contanos tu consulta..."
+                value={formState.message}
+                onChange={handleInputChange}
+                style={{ ...fieldStyle, resize: 'none' }}
+                onFocus={e => e.target.style.borderBottomColor = '#1C3A52'}
+                onBlur={e => e.target.style.borderBottomColor = '#E2DDD5'}
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '18px',
+                marginTop: '36px',
+                backgroundColor: '#0B0C0E',
+                color: '#FFFFFF',
+                border: 'none',
+                fontFamily: "'Inter', system-ui, sans-serif",
+                fontSize: '12px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                transition: 'opacity 0.3s ease',
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
+              {isSubmit ? 'Redirigiendo a WhatsApp...' : 'Solicitar Turno'}
+            </button>
+          </form>
         </div>
       </div>
     </section>

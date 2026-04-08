@@ -1,72 +1,116 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Process = ({ steps, colors }) => {
+const Process = ({ steps }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const numbers = ['01', '02', '03'];
+
   return (
-    <section id="proceso" style={{ backgroundColor: '#fdfcf9' }}>
-      <div className="container">
-        <div className="text-center mb-40 reveal">
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Tu Camino a la Sonrisa Perfecta</h2>
-          <p style={{ maxWidth: '600px', marginInline: 'auto', color: 'rgba(0,0,0,0.6)' }}>
-            Un viaje diseñado para tu comodidad y confianza, paso a paso.
-          </p>
-        </div>
-
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-          gap: '40px',
-          position: 'relative'
+    <section
+      id="proceso"
+      style={{
+        backgroundColor: '#F5F2EC',
+        padding: '120px 0',
+      }}
+    >
+      {/* Header */}
+      <div style={{ textAlign: 'center', marginBottom: '80px', padding: '0 60px' }}>
+        <p style={{
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: '11px',
+          fontWeight: '600',
+          letterSpacing: '3px',
+          textTransform: 'uppercase',
+          color: '#C8A96E',
+          marginBottom: '24px',
         }}>
-          {/* Línea conectora decorativa (solo desktop) */}
-          <div style={{
-            position: 'absolute',
-            top: '40px',
-            left: '10%',
-            right: '10%',
-            height: '2px',
-            background: `linear-gradient(90deg, transparent, ${colors.primary}33, transparent)`,
-            zIndex: 1,
-            display: 'none' // activado vía media query o inline si prefieres
-          }} className="process-line"></div>
-
-          {steps.map((s, index) => (
-            <div 
-              key={index} 
-              className="reveal" 
-              style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}
-            >
-              <div style={{
-                width: '80px',
-                height: '80px',
-                borderRadius: '50%',
-                backgroundColor: 'white',
-                border: `2px solid ${colors.primary}22`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 25px',
-                fontSize: '1.5rem',
-                fontWeight: '800',
-                color: colors.primary,
-                boxShadow: 'var(--shadow-md)',
-                transition: 'var(--transition)'
-              }}>
-                {s.step}
-              </div>
-              <h3 style={{ marginBottom: '15px' }}>{s.title}</h3>
-              <p style={{ opacity: 0.8, fontSize: '0.95rem' }}>{s.desc}</p>
-            </div>
-          ))}
-        </div>
+          ● El Proceso
+        </p>
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '52px',
+          fontStyle: 'italic',
+          fontWeight: '400',
+          color: '#0B0C0E',
+          lineHeight: '1.15',
+          margin: 0,
+        }}>
+          Tres Pasos / Hacia Tu Sonrisa Ideal
+        </h2>
       </div>
 
-      <style>
-        {`
-          @media (min-width: 992px) {
-            .process-line { display: block !important; }
+      {/* Steps Grid */}
+      <div style={{
+        maxWidth: '1280px',
+        margin: '0 auto',
+        padding: '0 60px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '2px',
+      }}>
+        {(steps || []).slice(0, 3).map((s, index) => (
+          <div
+            key={index}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+            style={{
+              border: '1px solid #E2DDD5',
+              padding: '48px 40px',
+              backgroundColor: hoveredIndex === index ? '#FFFFFF' : 'transparent',
+              boxShadow: hoveredIndex === index ? '0 8px 40px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all 0.4s ease',
+              position: 'relative',
+              cursor: 'default',
+            }}
+          >
+            {/* Número decorativo */}
+            <div style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '120px',
+              fontWeight: '700',
+              color: '#C8A96E',
+              lineHeight: '1',
+              opacity: 0.4,
+              marginBottom: '24px',
+              userSelect: 'none',
+            }}>
+              {numbers[index]}
+            </div>
+
+            <h3 style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '28px',
+              fontWeight: '600',
+              color: '#0B0C0E',
+              marginBottom: '16px',
+              lineHeight: '1.2',
+            }}>
+              {s.title}
+            </h3>
+            <p style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '15px',
+              color: '#8A8A8A',
+              lineHeight: '1.7',
+              margin: 0,
+            }}>
+              {s.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          #proceso { padding: 70px 0 !important; }
+          #proceso > div:first-child { padding: 0 24px !important; }
+          #proceso > div:first-child h2 { font-size: 36px !important; }
+          #proceso > div:last-of-type {
+            grid-template-columns: 1fr !important;
+            padding: 0 24px !important;
           }
-        `}
-      </style>
+        }
+      `}</style>
     </section>
   );
 };
